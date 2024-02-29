@@ -1,4 +1,4 @@
-package stud.ntnu.idatt2003.oving4.cardgame.cards;
+package stud.ntnu.idatt2003.oving4.cardgame.model;
 
 /**
  * Represents a playing card. A playing card has a number (face) between
