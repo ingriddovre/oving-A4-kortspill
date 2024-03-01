@@ -3,6 +3,7 @@ package stud.ntnu.idatt2003.oving4.cardgame.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CheckHand {
 
@@ -79,5 +80,15 @@ public class CheckHand {
     } else {
       return "No <3";
     }
+  }
+
+  /**
+   * Checks if the hand contains a card equals to S12, if it does, it returns true. Otherwise, false.
+   * @param hand ArrayList of 5 PlayingCard objects.
+   * @return Boolean value if the hand contains an S12 card or not.
+   */
+  public static boolean spadesWoman(ArrayList<PlayingCard> hand) {
+    String S12 = hand.stream().filter(c -> c.getAsString().equals("S12")).toString();
+    return !S12.isEmpty();
   }
 }
