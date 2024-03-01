@@ -3,6 +3,7 @@ package stud.ntnu.idatt2003.oving4.cardgame.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CheckHand {
 
@@ -54,6 +55,16 @@ public class CheckHand {
       }
     }
     return countLast == 4 || countFirst == 4;
+  }
+
+  /**
+   * Summarizes the face values of the hand. Creates a list of the face values from the hand, then summarizes them.
+   * @param hand ArrayList of 5 PlayingCard objects.
+   * @return The sum of the faces.
+   */
+  public static int sumOfFaces(ArrayList<PlayingCard> hand) {
+    List<Integer> handFaces = hand.stream().map(PlayingCard::getFace).toList();
+    return handFaces.stream().mapToInt(Integer::intValue).sum();
   }
 
 }
