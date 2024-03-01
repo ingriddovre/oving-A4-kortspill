@@ -3,15 +3,14 @@ package stud.ntnu.idatt2003.oving4.cardgame.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class CheckHand {
 
   /**
-   * Checks if the hand has any distinct cards more than 1. If there are more distinct counted than 1, the method
+   * Checks if the hand has any distinct cards more than 1. If there are more than 1 distinct counted, the method
    * returns false, and it is therefore not a flush.
    * @param hand ArrayList of PlayingCard Objects to check.
-   * @return Boolean value, true if it is a Flush, with all 5 suits of the hand alike, or false if not.
+   * @return Boolean value, true if it is a Flush, or false if not.
    */
   public static boolean isFlush(ArrayList<PlayingCard> hand) {
     List<Character> handSuits = hand.stream().map(PlayingCard::getSuit).toList();
@@ -19,7 +18,7 @@ public class CheckHand {
   }
 
     /**
-     * After testing a hand with the isFlush() method, this method can be used to check if the hand is actually a
+     * After testing a hand with the isFlush() method, this method can be used to check if the hand is also a
      * royal flush. Which means it will not only contain all 5 cards of the same suit, but also needs to have
      * faces 1, 10, 11, 12, 13.
      * @param hand ArrayList of PlayingCards Objects. Has to be a size of 5 indexes.
@@ -44,12 +43,12 @@ public class CheckHand {
     int countLast = 0;
 
     if (handFaces.stream().distinct().count() == 2) {
-      List<Integer> distFaces = handFaces.stream().distinct().toList();
+      List<Integer> distinctFaces = handFaces.stream().distinct().toList();
       for (Integer f : handFaces) {
-        if (Objects.equals(f, distFaces.getFirst())) {
+        if (Objects.equals(f, distinctFaces.getFirst())) {
           countFirst += 1;
         }
-        if (Objects.equals(f, distFaces.getLast())) {
+        if (Objects.equals(f, distinctFaces.getLast())) {
           countLast += 1;
         }
       }
