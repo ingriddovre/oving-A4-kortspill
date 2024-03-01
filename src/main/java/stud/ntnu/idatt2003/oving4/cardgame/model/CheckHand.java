@@ -3,7 +3,6 @@ package stud.ntnu.idatt2003.oving4.cardgame.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class CheckHand {
 
@@ -67,4 +66,18 @@ public class CheckHand {
     return handFaces.stream().mapToInt(Integer::intValue).sum();
   }
 
+  /**
+   * Filters the cards of H from the hand into a new list. If the list is not empty, the values are returned as a String.
+   * Otherwise, it returns a string saying "No <3".
+   * @param hand ArrayList of 5 PlayingCard objects.
+   * @return String value of cards of hearts(H), or a String "No <3" if there are no hearts.
+   */
+  public static String cardsOfHearts(ArrayList<PlayingCard> hand) {
+    List<PlayingCard> heartCards = hand.stream().filter(c -> c.getSuit() == 'H').toList();
+    if (!heartCards.isEmpty()) {
+      return String.valueOf(heartCards);
+    } else {
+      return "No <3";
+    }
+  }
 }
