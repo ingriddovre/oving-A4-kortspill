@@ -16,4 +16,17 @@ public class CheckHand {
     return handSuits.stream().distinct().count() == 1;
   }
 
+    /**
+     * After testing a hand with the isFlush() method, this method can be used to check if the hand is actually a
+     * royal flush. Which means it will not only contain all 5 cards of the same suit, but also needs to have
+     * faces 1, 10, 11, 12, 13.
+     * @param hand ArrayList of PlayingCards Objects. Has to be a size of 5 indexes.
+     * @return Boolean value true if the hand has all necessary face values.
+     */
+  public static boolean isRoyalFlush(ArrayList<PlayingCard> hand) {
+    List<Integer> handFaces = hand.stream().map(PlayingCard::getFace).toList();
+      return handFaces.contains(1) && handFaces.contains(10) && handFaces.contains(11) && handFaces.contains(12) &&
+          handFaces.contains(13);
+  }
+
 }
