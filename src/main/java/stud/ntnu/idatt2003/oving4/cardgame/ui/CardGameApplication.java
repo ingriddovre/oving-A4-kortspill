@@ -23,6 +23,7 @@ public class CardGameApplication extends Application implements EventHandler<Act
   Button checkHand;
   Button newHand;
   Button exitGame;
+  BorderPane layout;
   Stage window;
   Scene scene1;
 
@@ -37,51 +38,62 @@ public class CardGameApplication extends Application implements EventHandler<Act
   public void start(Stage primaryStage) throws Exception {
     window = primaryStage;
     window.setTitle("Mini Card Game <3");
-    BorderPane layout = new BorderPane();
-
-    newHand = new Button("New hand");
-    newHand.setPrefSize(80, 25);
-    checkHand = new Button("Check hand");
-    checkHand.setPrefSize(80, 25);
-    exitGame = new Button("Exit game");
-    exitGame.setPrefSize(80, 20);
+    layout = new BorderPane();
+    HBox bottom = addHbox();
+    VBox left = addVbox();
+    layout.setLeft(left);
+    layout.setBottom(bottom);
 
     // lambda expression to handle button events todo: fix event handling later
     newHand.setOnAction(e -> DeckOfCards.dealHand(5));
-    checkHand.setOnAction(e -> {
-    });
+    checkHand.setOnAction(e -> {});
     exitGame.setOnAction(e -> stop());
 
+    scene1 = new Scene(layout, 800, 500);
+    window.setScene(scene1);
+    window.show();
+  }
 
-    // bottom og the borderpane
+  // bottom of the borderpane
+  private HBox addHbox() {
     HBox bottom = new HBox();
     bottom.setStyle("-fx-background-color: #778899;");
-    layout.setBottom(bottom);
     bottom.setSpacing(10);
     bottom.setPadding(new Insets(15, 12, 15, 12));
+
+    // init buttons
+    newHand = new Button("New hand");
+    newHand.setPrefSize(80, 25);
+
+    checkHand = new Button("Check hand");
+    checkHand.setPrefSize(80, 25);
+
+    exitGame = new Button("Exit game");
+    exitGame.setPrefSize(80, 20);
+
     bottom.getChildren().addAll(newHand, checkHand, exitGame);
     bottom.setAlignment(Pos.CENTER_LEFT);
-    scene1 = new Scene(layout, 500, 350);
 
-    // left of the borderpane
+    return bottom;
+  }
+
+  // left of the borderpane
+  private VBox addVbox() {
     VBox leftView = new VBox();
     leftView.setStyle("-fx-background-color: #778899;");
-    layout.setLeft(leftView);
     leftView.setPadding(new Insets(10));
 
     Text title = new Text("Your stats: ");
     title.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
     leftView.getChildren().add(title);
 
-    window.setScene(scene1);
-    window.show();
+    return leftView;
   }
 
   @Override
   public void stop() {
     System.exit(0);
   }
-
 
   @Override
   public void handle(ActionEvent actionEvent) {
