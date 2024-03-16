@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DeckOfCards {
-  private ArrayList<PlayingCard> deck;
+  private static ArrayList<PlayingCard> deck;
   private final char[] suits = {'H', 'D', 'C', 'S'};
   public DeckOfCards() {
     deck = new ArrayList<>(52);
@@ -28,7 +28,7 @@ public class DeckOfCards {
    * @param n amount of wanted cards
    * @return ArrayList with n indexes and n PlayingCard objects.
    */
-  private ArrayList<PlayingCard> dealHand(int n) { // n-amount cards from the deck
+  public static ArrayList<PlayingCard> dealHand (int n) { // n-amount cards from the deck
     ArrayList<PlayingCard> hand = new ArrayList<>();
     for (int i = 0 ; i < n ; i++) {
       Random r = new Random();
