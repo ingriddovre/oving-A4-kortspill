@@ -2,13 +2,14 @@
     -fx-background-color: #66888899;
     -fx-padding: 20px;
     -fx-spacing: 30px;
-    -fx-align-items: center;
+    -fx-alignment: center;
+    -fx-pref-height: 100px;
 }
 .TitleText {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-color: #000000;
-    -fx-font-family: Verdana, sans-serif;
+    -fx-font-family: Arial, Helvetica, sans-serif;
     -fx-text-align: center;
 }
 .text {
@@ -22,15 +23,18 @@
 
 .vBox {
     -fx-background-color: #997799;
-    -fx-align-items: center;
+    -fx-spacing: 30px;
+    -fx-padding: 20px;
+    -fx-alignment: top-center;
+    -fx-pref-width: 250px;
 }
 
 .scene {
-    -fx-align-items: center;
+    -fx-alignment: center;
 }
 
 .button {
-    -fx-background-color: #775599;
+    -fx-background-color: #778888;
     -fx-font-family: Arial, Helvetica, sans-serif;
     -fx-block-size: 80px;
 }

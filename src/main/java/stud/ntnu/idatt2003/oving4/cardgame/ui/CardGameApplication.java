@@ -1,5 +1,7 @@
 package stud.ntnu.idatt2003.oving4.cardgame.ui;
 
+import java.util.ArrayList;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 import stud.ntnu.idatt2003.oving4.cardgame.input.VerifyInput;
 import stud.ntnu.idatt2003.oving4.cardgame.model.CheckHand;
 import stud.ntnu.idatt2003.oving4.cardgame.model.DeckOfCards;
+import stud.ntnu.idatt2003.oving4.cardgame.model.PlayingCard;
 
 
 // todo: https://www.youtube.com/watch?v=FLkOX4Eez6o&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG yt-serie om javafx
@@ -32,6 +35,7 @@ public class CardGameApplication extends Application implements EventHandler<Act
   boolean fourOfAKind;
   int sumOfFaces;
   String cardsOfHearts;
+  static boolean check = false;
 
   /**
    * Sets up the program as a javafx application, then calls the start method.
@@ -53,7 +57,7 @@ public class CardGameApplication extends Application implements EventHandler<Act
     layout.setBottom(bottom);
 
     scene1 = new Scene(layout, 1000, 800);
-    scene1.getStylesheets().add("src/main/resources/styles.css");
+    scene1.getStylesheets().add("styles.css");
 
     window.setScene(scene1);
     window.show();
@@ -62,22 +66,23 @@ public class CardGameApplication extends Application implements EventHandler<Act
   // bottom of the borderpane
   private HBox addBottomHBox() {
     HBox bottom = new HBox();
-    bottom.getStylesheets().add("styles.css");
     bottom.getStyleClass().add("hBox");
 
     input = new TextField("Type amount of cards");
     input.setPrefSize(200, 30);
+    input.getStyleClass().add("text");
 
     // buttons
     newHand = new Button("New hand");
-    newHand.getStylesheets().add("button");
+    newHand.getStyleClass().add("button");
     newHand.setOnAction(e -> {
-      DeckOfCards.dealHand(VerifyInput.isInt(input, input.getText()));
+      ArrayList<PlayingCard> hand = DeckOfCards.dealHand(VerifyInput.isInt(input, input.getText()));
     });
 
     checkHand = new Button("Check hand");
-    checkHand.getStylesheets().add("button");
+    checkHand.getStyleClass().add("button");
     checkHand.setOnAction(e -> {
+      check = true;
       flush = CheckHand.isFlush(DeckOfCards.dealHand(
           VerifyInput.isInt(input, input.getText())));
 
@@ -98,92 +103,125 @@ public class CardGameApplication extends Application implements EventHandler<Act
     });
 
     exitGame = new Button("Exit game");
-    exitGame.getStylesheets().add("button");
+    exitGame.getStyleClass().add("button");
     exitGame.setOnAction(e -> stop());
 
-    bottom.getChildren().addAll(newHand, checkHand, exitGame, input);
+    bottom.getChildren().addAll(input, newHand, checkHand, exitGame);
 
     return bottom;
   }
 
   // left of the borderpane
-  private VBox addLeftVbox() { // might want to make this one a stack panel
+  private VBox addLeftVbox() {
     VBox leftView = new VBox();
-    leftView.getStylesheets().add("styles.css");
     leftView.getStyleClass().add("vBox");
 
-    // text
     Text title = new Text("Your stats:");
     title.getStyleClass().add("TitleText");
 
-
-    leftView.getChildren().addAll(title);
+    leftView.getChildren().addAll(title, flushbox(), royalFlushbox(), fourOfAKindBox(),
+        sumOfFacesBox(), cardsOfHeartsBox(), spadesWomanBox());
 
     return leftView;
   }
 
-// todo: add all hboxes under eachother to all then add in the left panel
   private HBox flushbox() {
     HBox info = new HBox();
-    info.getStylesheets().add("styles.css");
+    info.getStyleClass().add("hBox");
 
-    Text flush = new Text("Flush");
-    flush.getStyleClass().add("text");
+    Text flushText = new Text("Flush");
+    TextArea answer = new TextArea(String.valueOf(flush));
+    flushText.getStyleClass().add("text");
+    answer.getStyleClass().add("text");
 
-    info.getChildren().addAll(flush);
-
+    if (check) {
+      info.getChildren().addAll(flushText, answer);
+    } else {
+      info.getChildren().add(flushText);
+    }
     return info;
   }
   private HBox royalFlushbox() {
     HBox info = new HBox();
-    info.getStyleClass().add("styles.css");
+    info.getStyleClass().add("hBox");
 
-    Text royalFlush = new Text("Royal Flushes");
-    royalFlush.getStyleClass().add("text");
+    Text royalFlushText = new Text("Royal Flushes");
+    Text answer = new Text(String.valueOf(royalFlush));
+    royalFlushText.getStyleClass().add("text");
+    answer.getStyleClass().add("text");
 
-    info.getChildren().addAll(royalFlush);
-
+    if (check) {
+      info.getChildren().addAll(royalFlushText, answer);
+    } else {
+      info.getChildren().add(royalFlushText);
+    }
     return info;
-
   }
   private HBox fourOfAKindBox() {
     HBox info = new HBox();
-    info.getStylesheets().add("styles.css");
+    info.getStyleClass().add("hBox");
 
-    Text fourOfaKind = new Text("4 of a kind");
-    fourOfaKind.getStyleClass().add("text");
+    Text fourOfaKindText = new Text("4 of a kind");
+    Text answer = new Text(String.valueOf(fourOfAKind));
+    fourOfaKindText.getStyleClass().add("text");
+    answer.getStyleClass().add("text");
 
+    if (check) {
+      info.getChildren().addAll(fourOfaKindText, answer);
+    } else {
+      info.getChildren().add(fourOfaKindText);
+    }
     return info;
   }
   private HBox sumOfFacesBox() {
     HBox info = new HBox();
-    info.getStylesheets().add("styles.css");
+    info.getStyleClass().add("hBox");
 
     Text sum = new Text("Sum of faces: ");
+    Text answer = new Text(String.valueOf(sumOfFaces));
     sum.getStyleClass().add("text");
+    answer.getStyleClass().add("text");
 
+    if (check) {
+      info.getChildren().addAll(sum, answer);
+    } else {
+      info.getChildren().add(sum);
+    }
     return info;
   }
   private HBox cardsOfHeartsBox() {
     HBox info = new HBox();
-    info.getStylesheets().add("styles.css");
+    info.getStyleClass().add("hBox");
 
-    Text cardsOfHearts = new Text("Cards of <3:");
-    cardsOfHearts.getStyleClass().add("text");
+    Text cardsOfHeartsText = new Text("Cards of <3:");
+    Text answer = new Text(cardsOfHearts);
+    cardsOfHeartsText.getStyleClass().add("text");
+    answer.getStyleClass().add("text");
 
+    if (check) {
+      info.getChildren().addAll(cardsOfHeartsText, answer);
+    } else {
+      info.getChildren().add(cardsOfHeartsText);
+    }
     return info;
   }
   private HBox spadesWomanBox() {
     HBox info = new HBox();
-    info.getStylesheets().add("styles.css");
+    info.getStyleClass().add("hBox");
 
-    Text spadeWoman = new Text("Spade woman?");
-    spadeWoman.getStyleClass().add("text");
+    Text spadeWomanText = new Text("Spade woman?");
+    Text answer = new Text(String.valueOf(spadeWoman));
+    spadeWomanText.getStyleClass().add("text");
+    answer.getStyleClass().add("text");
 
+    if (check) {
+      info.getChildren().addAll(spadeWomanText, answer);
+    } else {
+      info.getChildren().add(spadeWomanText);
+    }
     return info;
   }
 
-  // todo: lag denne til en container som inneholder bilder av kortene
 
   @Override
   public void stop() {
