@@ -136,18 +136,22 @@ public class CardGameApplication extends Application implements EventHandler<Act
   private HBox fourOfAKindBox() {
     HBox info = new HBox();
     int fourOfaKind = 0;
+    return info;
   }
   private HBox sumOfFacesBox() {
     HBox info = new HBox();
-    int sumOfFaces = CheckHand.sumOfFaces();
+    //int sumOfFaces = CheckHand.sumOfFaces();
+    return info;
   }
   private HBox cardsOfHeartsbox() {
     HBox info = new HBox();
-    String CardsOfHearts = CheckHand.cardsOfHearts();
+    //String CardsOfHearts = CheckHand.cardsOfHearts();
+    return info;
   }
   private HBox spadesWomanbox() {
     HBox info = new HBox();
-    int countSpadeWoman = 0;
+    //int countSpadeWoman = 0;
+    return info;
   }
 
   @Override
