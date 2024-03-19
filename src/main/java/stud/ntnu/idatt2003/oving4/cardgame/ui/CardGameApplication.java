@@ -8,12 +8,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import stud.ntnu.idatt2003.oving4.cardgame.input.VerifyInput;
+import stud.ntnu.idatt2003.oving4.cardgame.model.ButtonManager;
 import stud.ntnu.idatt2003.oving4.cardgame.model.CheckHand;
 import stud.ntnu.idatt2003.oving4.cardgame.model.DeckOfCards;
 import stud.ntnu.idatt2003.oving4.cardgame.model.PlayingCard;
@@ -21,22 +24,20 @@ import stud.ntnu.idatt2003.oving4.cardgame.model.PlayingCard;
 
 // todo: https://www.youtube.com/watch?v=FLkOX4Eez6o&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG yt-serie om javafx
 // todo: https://docs.oracle.com/javafx/2/layout/builtin_layouts.htm link til layouts
-public class CardGameApplication extends Application implements EventHandler<ActionEvent> {
+public class CardGameApplication extends Application {
   Button checkHand;
   Button newHand;
   Button exitGame;
   BorderPane layout;
   Stage window;
   Scene scene1;
-  TextField input;
-  boolean flush;
-  boolean royalFlush;
-  boolean spadeWoman;
-  boolean fourOfAKind;
-  int sumOfFaces;
-  String cardsOfHearts;
-  static boolean check = false;
-
+  HBox center;
+  public static boolean flush;
+  public static boolean royalFlush;
+  public static boolean spadeWoman;
+  public static boolean fourOfAKind;
+  public static int sumOfFaces;
+  public static String cardsOfHearts;
   /**
    * Sets up the program as a javafx application, then calls the start method.
    */
@@ -53,75 +54,58 @@ public class CardGameApplication extends Application implements EventHandler<Act
 
     HBox bottom = addBottomHBox();
     VBox left = addLeftVbox();
+    this.center = new HBox();
+    center.getStyleClass().add("hBox");
+
     layout.setLeft(left);
     layout.setBottom(bottom);
+    layout.setCenter(center);
 
     scene1 = new Scene(layout, 1000, 800);
     scene1.getStylesheets().add("styles.css");
 
     window.setScene(scene1);
     window.show();
+
+
+    // button events
+    newHand.setOnAction(e -> {
+      ArrayList<PlayingCard> hand = ButtonManager.newDeckButton();
+      center.getChildren().removeAll(); // removes the prior images if method was used prior
+
+      for (PlayingCard c : hand) {
+        String path = DeckOfCards.generateImagePath(c.getSuit(), c.getFace());
+        System.out.println(path);
+        Image image = new Image(path);
+        ImageView view = new ImageView(image);
+        view.setFitWidth(150);
+        view.setPreserveRatio(true);
+        center.getChildren().add(view);
+        view.toFront();
+      }
+    });
+
+    checkHand.setOnAction(e -> ButtonManager.checkHandButton());
+
+    exitGame.setOnAction(e -> stop());
   }
+
 
   // bottom of the borderpane
   private HBox addBottomHBox() {
     HBox bottom = new HBox();
     bottom.getStyleClass().add("hBox");
 
-    input = new TextField("Type amount of cards");
-    input.setPrefSize(200, 30);
-    input.getStyleClass().add("text");
-
-    input.setOnAction(e -> {
-      // todo: i window med kort i, clear før du legger inn nye kort - trenger ikke new hand button egt
-      ArrayList<PlayingCard> hand = DeckOfCards.dealHand(VerifyInput.isInt(input, input.getText()));
-
-      for (PlayingCard c : hand) {
-        // generate new image with a generateImage() method that takes in the suit and face of the card
-        // new ImageView object of the image you generated
-        // set size and preserveRation true
-        // add the image to the "bottom" hbox,
-        // can be smart to Bring to front
-
-      }
-    }
-
-    // buttons
     newHand = new Button("New hand");
     newHand.getStyleClass().add("button");
-    newHand.setOnAction(e -> {
-      ArrayList<PlayingCard> hand = DeckOfCards.dealHand(VerifyInput.isInt(input, input.getText()));
-
-    });
 
     checkHand = new Button("Check hand");
     checkHand.getStyleClass().add("button");
-    checkHand.setOnAction(e -> {
-      check = true;
-      flush = CheckHand.isFlush(DeckOfCards.dealHand(
-          VerifyInput.isInt(input, input.getText())));
-
-      royalFlush = CheckHand.isRoyalFlush(DeckOfCards.dealHand(
-          VerifyInput.isInt(input, input.getText())));
-
-      spadeWoman = CheckHand.spadesWoman(DeckOfCards.dealHand(
-          VerifyInput.isInt(input, input.getText())));
-
-      fourOfAKind = CheckHand.isFourOfAKind(DeckOfCards.dealHand(
-          VerifyInput.isInt(input, input.getText())));
-
-      sumOfFaces = CheckHand.sumOfFaces(DeckOfCards.dealHand(
-          VerifyInput.isInt(input, input.getText())));
-
-      cardsOfHearts = CheckHand.cardsOfHearts(DeckOfCards.dealHand(
-          VerifyInput.isInt(input, input.getText())));
-    });
 
     exitGame = new Button("Exit game");
     exitGame.getStyleClass().add("button");
-    exitGame.setOnAction(e -> stop());
 
-    bottom.getChildren().addAll(input, newHand, checkHand, exitGame);
+    bottom.getChildren().addAll(newHand, checkHand, exitGame);
 
     return bottom;
   }
@@ -145,15 +129,12 @@ public class CardGameApplication extends Application implements EventHandler<Act
     info.getStyleClass().add("hBox");
 
     Text flushText = new Text("Flush");
-    TextArea answer = new TextArea(String.valueOf(flush));
+    Text answer = new Text(String.valueOf(flush));
     flushText.getStyleClass().add("text");
     answer.getStyleClass().add("text");
 
-    if (check) {
-      info.getChildren().addAll(flushText, answer);
-    } else {
-      info.getChildren().add(flushText);
-    }
+    info.getChildren().addAll(flushText, answer);
+
     return info;
   }
   private HBox royalFlushbox() {
@@ -165,11 +146,8 @@ public class CardGameApplication extends Application implements EventHandler<Act
     royalFlushText.getStyleClass().add("text");
     answer.getStyleClass().add("text");
 
-    if (check) {
-      info.getChildren().addAll(royalFlushText, answer);
-    } else {
-      info.getChildren().add(royalFlushText);
-    }
+    info.getChildren().addAll(royalFlushText, answer);
+
     return info;
   }
   private HBox fourOfAKindBox() {
@@ -181,11 +159,8 @@ public class CardGameApplication extends Application implements EventHandler<Act
     fourOfaKindText.getStyleClass().add("text");
     answer.getStyleClass().add("text");
 
-    if (check) {
-      info.getChildren().addAll(fourOfaKindText, answer);
-    } else {
-      info.getChildren().add(fourOfaKindText);
-    }
+    info.getChildren().addAll(fourOfaKindText, answer);
+
     return info;
   }
   private HBox sumOfFacesBox() {
@@ -197,11 +172,8 @@ public class CardGameApplication extends Application implements EventHandler<Act
     sum.getStyleClass().add("text");
     answer.getStyleClass().add("text");
 
-    if (check) {
-      info.getChildren().addAll(sum, answer);
-    } else {
-      info.getChildren().add(sum);
-    }
+    info.getChildren().addAll(sum, answer);
+
     return info;
   }
   private HBox cardsOfHeartsBox() {
@@ -213,11 +185,8 @@ public class CardGameApplication extends Application implements EventHandler<Act
     cardsOfHeartsText.getStyleClass().add("text");
     answer.getStyleClass().add("text");
 
-    if (check) {
-      info.getChildren().addAll(cardsOfHeartsText, answer);
-    } else {
-      info.getChildren().add(cardsOfHeartsText);
-    }
+    info.getChildren().addAll(cardsOfHeartsText, answer);
+
     return info;
   }
   private HBox spadesWomanBox() {
@@ -229,22 +198,12 @@ public class CardGameApplication extends Application implements EventHandler<Act
     spadeWomanText.getStyleClass().add("text");
     answer.getStyleClass().add("text");
 
-    if (check) {
-      info.getChildren().addAll(spadeWomanText, answer);
-    } else {
-      info.getChildren().add(spadeWomanText);
-    }
+    info.getChildren().addAll(spadeWomanText, answer);
+
     return info;
   }
-
-
   @Override
   public void stop() {
     System.exit(0);
-  }
-
-  @Override
-  public void handle(ActionEvent actionEvent) {
-
   }
 }

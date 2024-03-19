@@ -28,15 +28,19 @@ public class DeckOfCards {
    * @param n amount of wanted cards
    * @return ArrayList with n indexes and n PlayingCard objects.
    */
-  public static ArrayList<PlayingCard> dealHand (int n) { // n-amount cards from the deck
+  public ArrayList<PlayingCard> dealHand (int n) { // n-amount cards from the deck
     ArrayList<PlayingCard> hand = new ArrayList<>();
     for (int i = 0 ; i < n ; i++) {
       Random r = new Random();
-      int index = r.nextInt(53); // random number from 0 to 52 (index of deck list)
-      PlayingCard card  = deck.get(index);
+      int index = r.nextInt(1,53); // random number from 0 to 52 (index of deck list)
+      PlayingCard card = deck.get(index);
       hand.add(card);
     }
     return hand;
+  }
+
+  public static String generateImagePath(char suit, int face) {
+    return "src/main/resources/images/" + suit + "/" + face + ".png";
   }
 
 }
