@@ -74,8 +74,13 @@ public class CheckHand {
    */
   public static String cardsOfHearts(ArrayList<PlayingCard> hand) {
     List<PlayingCard> heartCards = hand.stream().filter(c -> c.getSuit() == 'H').toList();
+    String result = "";
     if (!heartCards.isEmpty()) {
-      return String.valueOf(heartCards);
+      StringBuilder sb = new StringBuilder();
+      for (PlayingCard c : heartCards) {
+        result = String.valueOf(sb.append(c.getAsString()));
+      }
+      return result;
     } else {
       return "No <3";
     }
@@ -87,7 +92,6 @@ public class CheckHand {
    * @return Boolean value if the hand contains an S12 card or not.
    */
   public static boolean spadesWoman(ArrayList<PlayingCard> hand) {
-    String S12 = hand.stream().filter(c -> c.getAsString().equals("S12")).toString();
-    return !S12.isEmpty();
+    return hand.stream().anyMatch(c -> c.getAsString().equals("S12"));
   }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DeckOfCards {
-  private ArrayList<PlayingCard> deck;
+  private static ArrayList<PlayingCard> deck;
   private final char[] suits = {'H', 'D', 'C', 'S'};
   public DeckOfCards() {
     deck = new ArrayList<>(52);
@@ -13,13 +13,13 @@ public class DeckOfCards {
       deck.add(new PlayingCard('H', i));
     }
     for (int i = 1 ; i <= 13 ; i++) {
-      deck.add(new PlayingCard('D', i + 13));
+      deck.add(new PlayingCard('D', i));
     }
     for (int i = 1 ; i <= 13 ; i++) {
-      deck.add(new PlayingCard('C', i + 26));
+      deck.add(new PlayingCard('C', i));
     }
     for (int i = 1 ; i <= 13 ; i++) {
-      deck.add(new PlayingCard('S', i + 39));
+      deck.add(new PlayingCard('S', i));
     }
   }
 
@@ -28,15 +28,19 @@ public class DeckOfCards {
    * @param n amount of wanted cards
    * @return ArrayList with n indexes and n PlayingCard objects.
    */
-  private ArrayList<PlayingCard> dealHand(int n) { // n-amount cards from the deck
+  public ArrayList<PlayingCard> dealHand (int n) { // n-amount cards from the deck
     ArrayList<PlayingCard> hand = new ArrayList<>();
+    Random r = new Random();
     for (int i = 0 ; i < n ; i++) {
-      Random r = new Random();
-      int index = r.nextInt(53); // random number from 0 to 52 (index of deck list)
-      PlayingCard card  = deck.get(index);
+      int index = r.nextInt(deck.size()); // random number from 0 to 52 (index of deck list)
+      PlayingCard card = deck.get(index);
       hand.add(card);
     }
     return hand;
+  }
+
+  public static String generateImagePath(char suit, int face) {
+    return "/images/" + suit + face + ".png";
   }
 
 }
