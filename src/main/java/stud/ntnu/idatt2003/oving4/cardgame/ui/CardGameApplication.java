@@ -15,9 +15,6 @@ import stud.ntnu.idatt2003.oving4.cardgame.model.ButtonManager;
 import stud.ntnu.idatt2003.oving4.cardgame.model.DeckOfCards;
 import stud.ntnu.idatt2003.oving4.cardgame.model.PlayingCard;
 
-
-// todo: https://www.youtube.com/watch?v=FLkOX4Eez6o&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG yt-serie om javafx
-// todo: https://docs.oracle.com/javafx/2/layout/builtin_layouts.htm link til layouts
 public class CardGameApplication extends Application {
   Button checkHand;
   Button newHand;
