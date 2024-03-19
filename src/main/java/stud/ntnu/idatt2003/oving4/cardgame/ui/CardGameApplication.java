@@ -28,7 +28,7 @@ public class CardGameApplication extends Application implements EventHandler<Act
   BorderPane layout;
   Stage window;
   Scene scene1;
-  static TextField input;
+  TextField input;
   boolean flush;
   boolean royalFlush;
   boolean spadeWoman;
@@ -72,11 +72,26 @@ public class CardGameApplication extends Application implements EventHandler<Act
     input.setPrefSize(200, 30);
     input.getStyleClass().add("text");
 
+    input.setOnAction(e -> {
+      // todo: i window med kort i, clear før du legger inn nye kort - trenger ikke new hand button egt
+      ArrayList<PlayingCard> hand = DeckOfCards.dealHand(VerifyInput.isInt(input, input.getText()));
+
+      for (PlayingCard c : hand) {
+        // generate new image with a generateImage() method that takes in the suit and face of the card
+        // new ImageView object of the image you generated
+        // set size and preserveRation true
+        // add the image to the "bottom" hbox,
+        // can be smart to Bring to front
+
+      }
+    }
+
     // buttons
     newHand = new Button("New hand");
     newHand.getStyleClass().add("button");
     newHand.setOnAction(e -> {
       ArrayList<PlayingCard> hand = DeckOfCards.dealHand(VerifyInput.isInt(input, input.getText()));
+
     });
 
     checkHand = new Button("Check hand");
