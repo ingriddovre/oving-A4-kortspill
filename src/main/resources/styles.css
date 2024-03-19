@@ -15,6 +15,7 @@
 .centerBox {
     -fx-background-color: #997799;
     -fx-padding: 20px;
+    -fx-spacing: 30px;
     -fx-alignment: center;
     -fx-pref-height: 100px;
 }
@@ -32,7 +33,6 @@
     -fx-color: #000000;
     -fx-font-family: Arial, Helvetica, sans-serif;
     -fx-text-align: center;
-    -fx-effect: dropshadow( one-pass-box , #00000022 , 8 , 0.0 , 2 , 0)
 }
 
 .vBox {

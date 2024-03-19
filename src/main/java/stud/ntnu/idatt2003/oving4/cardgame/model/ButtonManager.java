@@ -12,6 +12,7 @@ public class ButtonManager {
     return hand;
   }
   public static void checkHandButton() {
+
     boolean flushAnswer = CheckHand.isFlush(hand);
     CardGameApplication.flushAnswer.setText(String.valueOf(flushAnswer));
 

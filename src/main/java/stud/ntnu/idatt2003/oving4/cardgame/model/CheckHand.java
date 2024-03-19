@@ -92,7 +92,6 @@ public class CheckHand {
    * @return Boolean value if the hand contains an S12 card or not.
    */
   public static boolean spadesWoman(ArrayList<PlayingCard> hand) {
-    String S12 = hand.stream().filter(c -> c.getAsString().equals("S12")).toString();
-    return !S12.isEmpty();
+    return hand.stream().anyMatch(c -> c.getAsString().equals("S12"));
   }
 }

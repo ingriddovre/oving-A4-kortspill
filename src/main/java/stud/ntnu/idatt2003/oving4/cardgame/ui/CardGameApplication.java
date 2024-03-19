@@ -70,8 +70,14 @@ public class CardGameApplication extends Application {
 
       // button events
       newHand.setOnAction(e -> {
+        flushAnswer.setText("");
+        royalFlushAnswer.setText("");
+        fourOfAKindAnswer.setText("");
+        sumOfFacesAnswer.setText("");
+        cardsOfHeartsAnswer.setText("");
+        spadeWomanAnswer.setText("");
         ArrayList<PlayingCard> hand = ButtonManager.newDeckButton();
-        center.getChildren().removeAll(); // removes the prior images if method was used prior
+        center.getChildren().clear();
 
         for (PlayingCard c : hand) {
           String path = DeckOfCards.generateImagePath(c.getSuit(), c.getFace());
@@ -86,7 +92,9 @@ public class CardGameApplication extends Application {
         }
       });
 
-      checkHand.setOnAction(e -> ButtonManager.checkHandButton());
+      checkHand.setOnAction(e -> {
+        ButtonManager.checkHandButton();
+      });
 
       exitGame.setOnAction(e -> stop());
 
