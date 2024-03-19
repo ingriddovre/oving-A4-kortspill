@@ -74,8 +74,13 @@ public class CheckHand {
    */
   public static String cardsOfHearts(ArrayList<PlayingCard> hand) {
     List<PlayingCard> heartCards = hand.stream().filter(c -> c.getSuit() == 'H').toList();
+    String result = "";
     if (!heartCards.isEmpty()) {
-      return String.valueOf(heartCards);
+      StringBuilder sb = new StringBuilder();
+      for (PlayingCard c : heartCards) {
+        result = String.valueOf(sb.append(c.getAsString()));
+      }
+      return result;
     } else {
       return "No <3";
     }

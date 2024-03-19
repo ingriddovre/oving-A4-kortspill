@@ -5,6 +5,20 @@
     -fx-alignment: center;
     -fx-pref-height: 100px;
 }
+.leftHBox {
+    -fx-background-color: #22888899;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+    -fx-alignment: center-left;
+    -fx-pref-height: 50px;
+}
+.centerBox {
+    -fx-background-color: #997799;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+    -fx-pref-height: 100px;
+}
+
 .TitleText {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -37,10 +51,4 @@
     -fx-background-color: #778888;
     -fx-font-family: Arial, Helvetica, sans-serif;
     -fx-block-size: 80px;
-}
-
-.image {
-    -fx-height: 100px;
-    -fx-width: 70px;
-    -fx-image-rendering: auto;
 }

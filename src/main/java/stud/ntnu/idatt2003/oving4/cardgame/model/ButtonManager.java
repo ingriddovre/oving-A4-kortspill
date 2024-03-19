@@ -5,16 +5,29 @@ import stud.ntnu.idatt2003.oving4.cardgame.ui.CardGameApplication;
 
 public class ButtonManager {
   static DeckOfCards deck = new DeckOfCards();
+  static ArrayList<PlayingCard> hand;
 
   public static ArrayList<PlayingCard> newDeckButton() {
-    return deck.dealHand(5);
+    hand = deck.dealHand(5);
+    return hand;
   }
   public static void checkHandButton() {
-    CardGameApplication.flush = CheckHand.isFlush(deck.dealHand(5));
-    CardGameApplication.royalFlush = CheckHand.isRoyalFlush(deck.dealHand(5));
-    CardGameApplication.spadeWoman = CheckHand.spadesWoman(deck.dealHand(5));
-    CardGameApplication.fourOfAKind = CheckHand.isFourOfAKind(deck.dealHand(5));
-    CardGameApplication.sumOfFaces = CheckHand.sumOfFaces(deck.dealHand(5));
-    CardGameApplication.cardsOfHearts = CheckHand.cardsOfHearts(deck.dealHand(5));
+    boolean flushAnswer = CheckHand.isFlush(hand);
+    CardGameApplication.flushAnswer.setText(String.valueOf(flushAnswer));
+
+    boolean rFAnswer = CheckHand.isRoyalFlush(hand);
+    CardGameApplication.royalFlushAnswer.setText(String.valueOf(rFAnswer));
+
+    boolean spadeWomanCard = CheckHand.spadesWoman(hand);
+    CardGameApplication.spadeWomanAnswer.setText(String.valueOf(spadeWomanCard));
+
+    boolean fourOfAKindCards = CheckHand.isFourOfAKind(hand);
+    CardGameApplication.fourOfAKindAnswer.setText(String.valueOf(fourOfAKindCards));
+
+    int sum = CheckHand.sumOfFaces(hand);
+    CardGameApplication.sumOfFacesAnswer.setText(String.valueOf(sum));
+
+    String heartCards = CheckHand.cardsOfHearts(hand);
+    CardGameApplication.cardsOfHeartsAnswer.setText(heartCards);
   }
 }

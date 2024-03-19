@@ -13,13 +13,13 @@ public class DeckOfCards {
       deck.add(new PlayingCard('H', i));
     }
     for (int i = 1 ; i <= 13 ; i++) {
-      deck.add(new PlayingCard('D', i + 13));
+      deck.add(new PlayingCard('D', i));
     }
     for (int i = 1 ; i <= 13 ; i++) {
-      deck.add(new PlayingCard('C', i + 26));
+      deck.add(new PlayingCard('C', i));
     }
     for (int i = 1 ; i <= 13 ; i++) {
-      deck.add(new PlayingCard('S', i + 39));
+      deck.add(new PlayingCard('S', i));
     }
   }
 
@@ -30,9 +30,9 @@ public class DeckOfCards {
    */
   public ArrayList<PlayingCard> dealHand (int n) { // n-amount cards from the deck
     ArrayList<PlayingCard> hand = new ArrayList<>();
+    Random r = new Random();
     for (int i = 0 ; i < n ; i++) {
-      Random r = new Random();
-      int index = r.nextInt(1,53); // random number from 0 to 52 (index of deck list)
+      int index = r.nextInt(deck.size()); // random number from 0 to 52 (index of deck list)
       PlayingCard card = deck.get(index);
       hand.add(card);
     }
@@ -40,7 +40,7 @@ public class DeckOfCards {
   }
 
   public static String generateImagePath(char suit, int face) {
-    return "src/main/resources/images/" + suit + "/" + face + ".png";
+    return "/images/" + suit + face + ".png";
   }
 
 }
