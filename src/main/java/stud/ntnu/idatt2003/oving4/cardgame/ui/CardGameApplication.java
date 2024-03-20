@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import stud.ntnu.idatt2003.oving4.cardgame.model.ButtonManager;
 import stud.ntnu.idatt2003.oving4.cardgame.model.DeckOfCards;
 import stud.ntnu.idatt2003.oving4.cardgame.model.PlayingCard;
 
