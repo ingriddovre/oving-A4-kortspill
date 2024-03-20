@@ -11,9 +11,19 @@ class CheckHandTest {
   static ArrayList<PlayingCard> hand;
   static ArrayList<PlayingCard> hand2;
   @BeforeAll
+  // set up a hand with no flush, royal flush, four of a kind, heart cards or spade woman card.
     static void setUp() {
     DeckOfCards deck = new DeckOfCards();
-    hand = deck.dealHand(5);
+    PlayingCard c1 = new PlayingCard('D', 1);
+    PlayingCard c2 = new PlayingCard('C', 2);
+    PlayingCard c3 = new PlayingCard('S', 3);
+    PlayingCard c4 = new PlayingCard('D', 4);
+    PlayingCard c5 = new PlayingCard('S', 5);
+    hand.add(c1);
+    hand.add(c2);
+    hand.add(c3);
+    hand.add(c4);
+    hand.add(c5);
     }
   @Nested
   class positiveTests {
@@ -90,7 +100,15 @@ class CheckHandTest {
         fail("Didnt return the cards of hearts.");
       }
     }
-
+    @Test
+    void noCardHearts() {
+    try {
+      String cardsOfHearts = CheckHand.cardsOfHearts(hand);
+      assertEquals("No <3", cardsOfHearts);
+    } catch (Exception e) {
+      fail("Returned heart cards when there are none in the hand.");
+    }
+  }
     @Test
     void spadesWoman() {
       try {
@@ -116,23 +134,39 @@ class CheckHandTest {
   class negativeTests {
     @Test
     void isFlush() {
-
+      try {
+        assertFalse(CheckHand.isFlush(hand));
+      } catch (Exception e) {
+        fail("Returned true when hand does not contain a flush.");
+      }
     }
 
     @Test
     void isRoyalFlush() {
+      try {
+        assertFalse(CheckHand.isRoyalFlush(hand));
+      } catch (Exception e) {
+        fail("Returned true when hand does not contain a royal flush.");
+      }
     }
 
     @Test
     void isFourOfAKind() {
-    }
-
-    @Test
-    void sumOfFaces() {
+      try {
+        assertFalse(CheckHand.isFourOfAKind(hand));
+      } catch (Exception e) {
+        fail("Returned true when hand does not contain four of a kind.");
+      }
     }
 
     @Test
     void cardsOfHearts() {
+      try {
+        String cardsOfHearts = CheckHand.cardsOfHearts(hand);
+        assertEquals("No <3", cardsOfHearts);
+      } catch (Exception e) {
+        fail("Returned heart cards when there are none in the hand.");
+      }
     }
 
     @Test
