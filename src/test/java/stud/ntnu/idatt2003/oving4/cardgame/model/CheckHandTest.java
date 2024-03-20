@@ -4,16 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class CheckHandTest {
   static ArrayList<PlayingCard> hand;
   static ArrayList<PlayingCard> hand2;
-  @BeforeAll
+  @BeforeEach
   // set up a hand with no flush, royal flush, four of a kind, heart cards or spade woman card.
-    static void setUp() {
-    DeckOfCards deck = new DeckOfCards();
+  void setUp() {
+    hand = new ArrayList<>();
     PlayingCard c1 = new PlayingCard('D', 1);
     PlayingCard c2 = new PlayingCard('C', 2);
     PlayingCard c3 = new PlayingCard('S', 3);
@@ -94,8 +95,19 @@ class CheckHandTest {
     @Test
     void cardsOfHearts() {
       try {
-        String cardsOfHearts = CheckHand.cardsOfHearts(hand);
-        assertEquals("H1H2H3H4H5", cardsOfHearts);
+        PlayingCard c1 = new PlayingCard('H', 1);
+        PlayingCard c2 = new PlayingCard('D', 1);
+        PlayingCard c3 = new PlayingCard('C', 1);
+        PlayingCard c4 = new PlayingCard('S', 1);
+        PlayingCard c5 = new PlayingCard('H', 5);
+        hand2 = new ArrayList<>();
+        hand2.add(c1);
+        hand2.add(c2);
+        hand2.add(c3);
+        hand2.add(c4);
+        hand2.add(c5);
+        String cardsOfHearts = CheckHand.cardsOfHearts(hand2);
+        assertEquals("H1H5", cardsOfHearts);
       } catch (Exception e) {
         fail("Didnt return the cards of hearts.");
       }
@@ -160,18 +172,12 @@ class CheckHandTest {
     }
 
     @Test
-    void cardsOfHearts() {
+    void spadesWoman() {
       try {
-        String cardsOfHearts = CheckHand.cardsOfHearts(hand);
-        assertEquals("No <3", cardsOfHearts);
+        assertFalse(CheckHand.spadesWoman(hand));
       } catch (Exception e) {
-        fail("Returned heart cards when there are none in the hand.");
+        fail("Returned true when hand does not contain a spade woman card.");
       }
     }
-
-    @Test
-    void spadesWoman() {
-    }
   }
-
 }
