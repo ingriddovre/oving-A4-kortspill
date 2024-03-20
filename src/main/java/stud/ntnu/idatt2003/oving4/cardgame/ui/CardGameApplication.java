@@ -61,7 +61,7 @@ public class CardGameApplication extends Application {
       layout.setBottom(bottom);
       layout.setCenter(center);
 
-      scene1 = new Scene(layout, 1620, 780);
+      scene1 = new Scene(layout, 1300, 750);
       scene1.getStylesheets().add("styles.css");
 
       // button events
@@ -80,7 +80,7 @@ public class CardGameApplication extends Application {
           System.out.println(path);
           Image image = new Image(path);
           ImageView view = new ImageView(image);
-          view.setFitWidth(200);
+          view.setFitWidth(180);
           view.setPreserveRatio(true);
 
           center.getChildren().add(view);
