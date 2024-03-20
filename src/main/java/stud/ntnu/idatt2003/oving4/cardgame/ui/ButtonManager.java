@@ -1,6 +1,9 @@
-package stud.ntnu.idatt2003.oving4.cardgame.model;
+package stud.ntnu.idatt2003.oving4.cardgame.ui;
 
 import java.util.ArrayList;
+import stud.ntnu.idatt2003.oving4.cardgame.model.CheckHand;
+import stud.ntnu.idatt2003.oving4.cardgame.model.DeckOfCards;
+import stud.ntnu.idatt2003.oving4.cardgame.model.PlayingCard;
 import stud.ntnu.idatt2003.oving4.cardgame.ui.CardGameApplication;
 
 public class ButtonManager {
